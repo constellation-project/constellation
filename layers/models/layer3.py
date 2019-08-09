@@ -1,0 +1,33 @@
+import ipaddress
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class Subnet(models.Model):
+    name = models.SlugField(unique=True)
+    prefix = models.GenericIPAddressField(protocol='both')
+    length = models.PositiveSmallIntegerField()
+
+    def ip_network(self):
+        return ipaddress.ip_network('{prefix}/{length}'.format(prefix=self.prefix, length=self.length))
+
+    def __str__(self):
+        return "{name} ({prefix}/{length})".format(
+            name=self.name,
+            prefix=self.prefix,
+            length=self.length
+        )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        try:
+            self.ip_network()
+        except ValueError:
+            raise ValidationError(_("Invalid IP subnet."))
+
+    class Meta:
+        unique_together = ('prefix', 'length')
