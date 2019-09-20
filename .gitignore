@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.swp
+.\#*
+*\#
+.coverage
+
+# Translations
+*.mo
+*.pot
+
+# Virtualenv
+venv
+
+# Django Stuff
+db.sqlite3
+*.log
+
+# IDE specific
+.idea
+.vscode
