@@ -1,0 +1,4 @@
+Django>=2.2.5,<2.3
+django-extensions==2.1.4
+docutils==0.14
+django-polymorphic==2.0.3
