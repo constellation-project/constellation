@@ -1,1 +1,1 @@
-default_app_config = 'management.apps.management'
+default_app_config = 'management.apps.ManagementConfig'
