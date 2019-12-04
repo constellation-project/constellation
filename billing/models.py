@@ -26,6 +26,7 @@ class InvoiceProducts(models.Model):
 
 class Invoice(models.Model):
     date = models.DateTimeField()
+    name = models.CharField(max_length=255)
     products = models.ManyToManyField(
         Product,
         through=InvoiceProducts,
