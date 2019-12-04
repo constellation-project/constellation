@@ -12,9 +12,9 @@ class ManagementConfig(AppConfig):
     def ready(self):
         pre_delete.connect(
             signals.pre_delete_interface,
-            sender='management.InterfaceDomains'
+            sender='management.ManagedInterface'
         )
         post_delete.connect(
             signals.post_delete_interface,
-            sender='management.InterfaceDomains'
+            sender='management.ManagedInterface'
         )
