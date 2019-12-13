@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import InterfaceDomains
+from .models import ManagedInterface
 
 
-@admin.register(InterfaceDomains)
-class InterfaceDomainsAdmin(admin.ModelAdmin):
+@admin.register(ManagedInterface)
+class ManagedInterfaceAdmin(admin.ModelAdmin):
     pass
