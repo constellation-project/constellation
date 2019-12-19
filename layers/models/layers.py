@@ -1,8 +1,11 @@
 import ipaddress
+
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.indexes import Index
 from django.utils.translation import gettext_lazy as _
+
 from .layer2 import MACAddressField, Vlan
 from .layer3 import Subnet
 
@@ -26,7 +29,13 @@ class IPAddress(models.Model):
             raise ValidationError(_("IP address must be in {subnet}.").format(subnet=network))
 
 class Machine(models.Model):
-    name = models.SlugField(unique=True)
+    name = models.CharField(
+        unique=True,
+        max_length=63,
+        validators=[
+            RegexValidator(r'[a-zA-Z0-9][a-zA-Z0-9-]{0,62}(?<!-)'),
+        ],
+    )
     owner = models.ForeignKey('auth.User', on_delete=models.PROTECT, related_name='machines')
     description = models.TextField(blank=True)
 
