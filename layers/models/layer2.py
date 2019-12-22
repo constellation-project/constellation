@@ -33,8 +33,15 @@ class MACAddressField(models.Field):
 
 class Vlan(models.Model):
     name = models.SlugField()
-    identifier = models.PositiveSmallIntegerField()
-    identifier2 = models.PositiveSmallIntegerField(default=0)
+    identifier = models.PositiveSmallIntegerField(
+        verbose_name=_("identifier"),
+        help_text=_("The VLAN identifier"),
+    )
+    identifier2 = models.PositiveSmallIntegerField(
+        default=0,
+        verbose_name=_("second identifier"),
+        help_text=_("The 2nd VLAN identifier (0 when absent)"),
+    )
 
     def __str__(self):
         return "{name} {identifier}".format(
