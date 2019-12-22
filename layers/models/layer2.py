@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django import forms
 from django.utils.translation import gettext_lazy as _
@@ -34,12 +35,20 @@ class MACAddressField(models.Field):
 class Vlan(models.Model):
     name = models.SlugField()
     identifier = models.PositiveSmallIntegerField(
-        verbose_name=_("identifier"),
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(4096),
+        ],
+        verbose_name=_("VLAN identifier"),
         help_text=_("The VLAN identifier"),
     )
     identifier2 = models.PositiveSmallIntegerField(
         default=0,
-        verbose_name=_("second identifier"),
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(4096),
+        ],
+        verbose_name=_("second VLAN identifier"),
         help_text=_("The 2nd VLAN identifier (0 when absent)"),
     )
 
