@@ -10,9 +10,9 @@ from .layer2 import MACAddressField, Vlan
 from .layer3 import Subnet
 
 
-class SubnetVlans(models.Model):
-    subnet = models.OneToOneField(Subnet, on_delete=models.CASCADE, related_name='vlans')
-    vlans = models.ManyToManyField(Vlan)
+class VlanSubnets(models.Model):
+    vlan = models.OneToOneField(Vlan, on_delete=models.CASCADE, related_name='subnets')
+    subnets = models.ManyToManyField(Subnet)
 
 class IPAddress(models.Model):
     subnet = models.ForeignKey(Subnet, on_delete=models.PROTECT)
