@@ -49,12 +49,8 @@ class IPAddress(models.Model):
             raise ValidationError(_("IP address must be in {subnet}.").format(subnet=network))
 
 class Machine(models.Model):
-    name = models.CharField(
+    name = models.SlugField(
         unique=True,
-        max_length=63,
-        validators=[
-            RegexValidator(r'[a-zA-Z0-9][a-zA-Z0-9-]{0,62}(?<!-)'),
-        ],
         verbose_name=_("name"),
     )
     owner = models.ForeignKey(
