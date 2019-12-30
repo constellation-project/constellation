@@ -1,9 +1,9 @@
 from .layer2 import MACAddressField, Vlan
 from .layer3 import Subnet
-from .layers import SubnetVlans, Interface, IPAddress, Machine
+from .layers import VlanSubnets, Interface, IPAddress, Machine
 
 __all__ = [
     'MACAddressField', 'Vlan'
     'Subnet',
-    'SubnetVlans', 'Interface', 'IPAddress', 'Machine'
+    'VlanSubnets', 'Interface', 'IPAddress', 'Machine'
 ]

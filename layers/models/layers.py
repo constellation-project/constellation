@@ -25,7 +25,7 @@ class VlanSubnets(models.Model):
 class IPAddress(models.Model):
     subnet = models.ForeignKey(
         Subnet,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
         verbose_name=_("IP subnet"),
     )
     address = models.GenericIPAddressField(
@@ -35,7 +35,7 @@ class IPAddress(models.Model):
     )
     interface = models.ForeignKey(
         'Interface',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
         verbose_name=_("interface")
     )
 
@@ -56,11 +56,11 @@ class Machine(models.Model):
     owner = models.ForeignKey(
         'auth.User',
         on_delete=models.PROTECT,
-        related_name='machines'
+        related_name='machines',
         verbose_name=_("owner"),
     )
     description = models.TextField(
-        blank=True
+        blank=True,
         verbose_name=_("description"),
     )
 
