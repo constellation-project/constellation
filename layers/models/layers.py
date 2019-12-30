@@ -10,14 +10,34 @@ from .layer2 import MACAddressField, Vlan
 from .layer3 import Subnet
 
 
-class SubnetVlans(models.Model):
-    subnet = models.OneToOneField(Subnet, on_delete=models.CASCADE, related_name='vlans')
-    vlans = models.ManyToManyField(Vlan)
+class VlanSubnets(models.Model):
+    vlan = models.OneToOneField(
+        Vlan,
+        on_delete=models.CASCADE,
+        related_name='subnets',
+        verbose_name=_("vlan"),
+    )
+    subnets = models.ManyToManyField(
+        Subnet,
+        verbose_name=_("IP subnet"),
+    )
 
 class IPAddress(models.Model):
-    subnet = models.ForeignKey(Subnet, on_delete=models.PROTECT)
-    address = models.GenericIPAddressField(protocol='both', unique=True)
-    interface = models.ForeignKey('Interface', on_delete=models.CASCADE)
+    subnet = models.ForeignKey(
+        Subnet,
+        on_delete=models.PROTECT
+        verbose_name=_("IP subnet"),
+    )
+    address = models.GenericIPAddressField(
+        protocol='both',
+        unique=True,
+        verbose_name=_("IP address"),
+    )
+    interface = models.ForeignKey(
+        'Interface',
+        on_delete=models.CASCADE
+        verbose_name=_("interface")
+    )
 
     def save(self, *args, **kwargs):
         self.full_clean()
@@ -29,15 +49,20 @@ class IPAddress(models.Model):
             raise ValidationError(_("IP address must be in {subnet}.").format(subnet=network))
 
 class Machine(models.Model):
-    name = models.CharField(
+    name = models.SlugField(
         unique=True,
-        max_length=63,
-        validators=[
-            RegexValidator(r'[a-zA-Z0-9][a-zA-Z0-9-]{0,62}(?<!-)'),
-        ],
+        verbose_name=_("name"),
     )
-    owner = models.ForeignKey('auth.User', on_delete=models.PROTECT, related_name='machines')
-    description = models.TextField(blank=True)
+    owner = models.ForeignKey(
+        'auth.User',
+        on_delete=models.PROTECT,
+        related_name='machines'
+        verbose_name=_("owner"),
+    )
+    description = models.TextField(
+        blank=True
+        verbose_name=_("description"),
+    )
 
     def __str__(self):
         return self.name
@@ -46,9 +71,22 @@ class Machine(models.Model):
         indexes = [models.Index(fields=['owner'])]
 
 class Interface(models.Model):
-    machine = models.ForeignKey(Machine, on_delete=models.CASCADE, related_name='interfaces')
-    mac_address = MACAddressField(unique=True)
-    subnets = models.ManyToManyField(Subnet, related_name='+', through=IPAddress)
+    machine = models.ForeignKey(
+        Machine,
+        on_delete=models.CASCADE,
+        related_name='interfaces',
+        verbose_name=_("machine"),
+    )
+    mac_address = MACAddressField(
+        unique=True,
+        verbose_name=_("MAC address"),
+    )
+    subnets = models.ManyToManyField(
+        Subnet,
+        related_name='+',
+        through=IPAddress,
+        verbose_name=_("subnets")
+    )
 
     def owner(self):
         return self.machine.owner

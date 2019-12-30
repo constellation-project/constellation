@@ -1,4 +1,5 @@
 import ipaddress
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -6,8 +7,13 @@ from django.utils.translation import gettext_lazy as _
 
 class Subnet(models.Model):
     name = models.SlugField(unique=True)
-    prefix = models.GenericIPAddressField(protocol='both')
-    length = models.PositiveSmallIntegerField()
+    prefix = models.GenericIPAddressField(
+        protocol='both',
+        verbose_name=_("prefix")
+    )
+    length = models.PositiveSmallIntegerField(
+        verbose_name=_("length")
+    )
 
     def ip_network(self):
         return ipaddress.ip_network('{prefix}/{length}'.format(prefix=self.prefix, length=self.length))
