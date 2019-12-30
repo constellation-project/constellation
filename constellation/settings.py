@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'billing',
     'layers',
     'firewall',
-    'dns',
+    'dnsmanager',
     'access',
     'topography',
     'management'
