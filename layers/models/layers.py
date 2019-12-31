@@ -48,6 +48,9 @@ class IPAddress(models.Model):
         if ipaddress.ip_address(self.address) not in network:
             raise ValidationError(_("IP address must be in {subnet}.").format(subnet=network))
 
+    def __str__(self):
+        return f"{self.address}/{self.subnet.length}"
+
 class Machine(models.Model):
     name = models.SlugField(
         unique=True,
