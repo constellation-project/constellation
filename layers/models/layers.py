@@ -22,6 +22,7 @@ class VlanSubnets(models.Model):
         verbose_name=_("IP subnet"),
     )
 
+
 class IPAddress(models.Model):
     subnet = models.ForeignKey(
         Subnet,
@@ -51,6 +52,7 @@ class IPAddress(models.Model):
     def __str__(self):
         return f"{self.address}/{self.subnet.length}"
 
+
 class Machine(models.Model):
     name = models.SlugField(
         unique=True,
@@ -72,6 +74,7 @@ class Machine(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=['owner'])]
+
 
 class Interface(models.Model):
     machine = models.ForeignKey(
