@@ -22,6 +22,9 @@ class VlanSubnets(models.Model):
         verbose_name=_("IP subnet"),
     )
 
+    def __str__(self):
+        return _("Subnets on {}").format(self.vlan.name)
+
 
 class IPAddress(models.Model):
     subnet = models.ForeignKey(
