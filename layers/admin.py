@@ -1,11 +1,15 @@
 from django.contrib import admin
 
-from .models import Vlan, Subnet, Interface, IPAddress, Machine
+from .models import Vlan, VlanSubnets, Subnet, Interface, IPAddress, Machine
 
+class VlanSubnetsInline(admin.TabularInline):
+    extra = 0
+    model = VlanSubnets
 
 @admin.register(Vlan)
 class VlanAdmin(admin.ModelAdmin):
     list_display = ('name', 'identifier', 'identifier2')
+    inlines = (VlanSubnetsInline,)
 
 @admin.register(Subnet)
 class SubnetAdmin(admin.ModelAdmin):
