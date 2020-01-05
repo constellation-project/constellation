@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'polymorphic',
+    'rest_framework',
     'member',
     'billing',
     'layers',
