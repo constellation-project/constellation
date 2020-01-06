@@ -31,6 +31,8 @@ else:
     from layers.api import views
 
     router = routers.DefaultRouter()
+    router.register(r'interface', views.InterfaceViewSet)
+    router.register(r'machine', views.MachineViewSet)
     router.register(r'subnet', views.SubnetViewSet)
     router.register(r'vlan', views.VlanViewSet)
 
