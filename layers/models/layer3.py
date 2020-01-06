@@ -19,11 +19,7 @@ class Subnet(models.Model):
         return ipaddress.ip_network('{prefix}/{length}'.format(prefix=self.prefix, length=self.length))
 
     def __str__(self):
-        return "{name} ({prefix}/{length})".format(
-            name=self.name,
-            prefix=self.prefix,
-            length=self.length
-        )
+        return f"{self.name}"
 
     def save(self, *args, **kwargs):
         self.full_clean()

@@ -4,12 +4,14 @@ from ..models import Interface, Machine, Subnet, Vlan
 
 
 class InterfaceSerializer(serializers.ModelSerializer):
+    subnets = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Interface
         fields = '__all__'
 
 class MachineSerializer(serializers.ModelSerializer):
-    interfaces = serializers.PrimaryKeyRelatedField(
+    interfaces = InterfaceSerializer(
         many=True,
         read_only=True,
     )
