@@ -40,6 +40,7 @@ class IPAddress(models.Model):
     interface = models.ForeignKey(
         'Interface',
         on_delete=models.CASCADE,
+        related_name='ip_addresses',
         verbose_name=_("interface")
     )
 

@@ -4,6 +4,7 @@ from ..models import Interface, Machine, Subnet, Vlan
 
 
 class InterfaceSerializer(serializers.ModelSerializer):
+    ip_addresses = serializers.StringRelatedField(many=True)
     subnets = serializers.StringRelatedField(many=True)
 
     class Meta:
