@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Interface, Machine, Subnet, Vlan
+from ..models import Interface, Machine, Subnet, Vlan, VlanSubnets
 
 
 class InterfaceSerializer(serializers.ModelSerializer):
@@ -9,7 +9,7 @@ class InterfaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Interface
-        fields = '__all__'
+        fields = ['mac_address', 'subnets', 'ip_addresses']
 
 class MachineSerializer(serializers.ModelSerializer):
     interfaces = InterfaceSerializer(
@@ -19,14 +19,28 @@ class MachineSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Machine
-        fields = '__all__'
+        fields = ['name', 'owner', 'description', 'interfaces']
 
 class SubnetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subnet
-        fields = '__all__'
+        fields = ['name', 'prefix', 'length']
+
+class VlanSubnetsSerializer(serializers.ModelSerializer):
+    subnets = SubnetSerializer(
+        many=True,
+        read_only=True,
+    )
+
+    class Meta:
+        model = VlanSubnets
+        fields = ['subnets']
 
 class VlanSerializer(serializers.ModelSerializer):
+    subnets = VlanSubnetsSerializer(
+        read_only=True,
+    )
+
     class Meta:
         model = Vlan
-        fields = '__all__'
+        fields = ['name', 'identifier', 'identifier2', 'subnets']
