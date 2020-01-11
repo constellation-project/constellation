@@ -22,6 +22,7 @@ class Product(models.Model):
 class InvoiceProducts(models.Model):
     invoice = models.ForeignKey('Invoice', on_delete=models.CASCADE, related_name='+')
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='+')
+    number = models.SmallIntegerField()
     price = models.BigIntegerField(editable=False)
 
 class Invoice(models.Model):
