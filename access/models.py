@@ -16,9 +16,12 @@ class Switch(Machine):
     location = models.CharField(max_length=255)
     model = models.CharField(max_length=32)
 
+    def __str__(self):
+        return self.name
+
 class Port(models.Model):
     switch = models.ForeignKey(Switch, on_delete=models.CASCADE, related_name='ports')
-    module = models.CharField(max_length=16, blank=True)
+    module = models.SlugField(blank=True)
     number = models.PositiveSmallIntegerField()
     vlans = models.ManyToManyField('layers.Vlan')
     room = models.ForeignKey('topography.Room', null=True, blank=True, on_delete=models.SET_NULL, related_name='switch_ports')
