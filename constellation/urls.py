@@ -28,13 +28,17 @@ try:
 except ImportError:
     pass
 else:
-    from layers.api import views
+    import layers.api.views
+    import access.api.views
 
     router = routers.DefaultRouter()
-    router.register(r'interface', views.InterfaceViewSet)
-    router.register(r'machine', views.MachineViewSet)
-    router.register(r'subnet', views.SubnetViewSet)
-    router.register(r'vlan', views.VlanViewSet)
+
+    router.register(r'interface', layers.api.views.InterfaceViewSet)
+    router.register(r'machine', layers.api.views.MachineViewSet)
+    router.register(r'subnet', layers.api.views.SubnetViewSet)
+    router.register(r'vlan', layers.api.views.VlanViewSet)
+
+    router.register(r'switch', access.api.views.SwitchViewSet)
 
     urlpatterns += [
         url(r'^api/', include(router.urls)),
