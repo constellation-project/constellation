@@ -25,7 +25,10 @@ class Building(models.Model):
 class Room(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='rooms')
     number = models.CharField(max_length=31)
-    occupant = models.ForeignKey('auth.User', null=True, on_delete=models.SET_NULL, related_name='room')
+    occupant = models.ForeignKey('auth.User', null=True, blank=True, on_delete=models.SET_NULL, related_name='room')
+
+    def __str__(self):
+        return f"{self.building.number}{self.number}@{self.building.group.name}"
 
     class Meta:
         unique_together = ('building', 'number')
