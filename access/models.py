@@ -3,17 +3,17 @@ from layers.models import Interface, Machine
 
 
 class WifiInterface(Interface):
-    username = models.CharField(max_length=32)
-    password = models.CharField(max_length=32)
+    username = models.SlugField()
+    password = models.CharField(max_length=128)
 
 class AccessPoint(Machine):
-    location = models.CharField(max_length=255)
+    location = models.CharField(max_length=256)
     latitude = models.FloatField()
     longitude = models.FloatField()
 
 class Switch(Machine):
     building = models.ForeignKey('topography.Building', on_delete=models.PROTECT)
-    location = models.CharField(max_length=255)
+    location = models.CharField(max_length=256)
     model = models.CharField(max_length=32)
 
     def __str__(self):
