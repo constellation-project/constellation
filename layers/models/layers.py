@@ -19,6 +19,7 @@ class VlanSubnets(models.Model):
     )
     subnets = models.ManyToManyField(
         Subnet,
+        related_name='vlans',
         verbose_name=_("IP subnet"),
     )
 
@@ -30,6 +31,7 @@ class IPAddress(models.Model):
     subnet = models.ForeignKey(
         Subnet,
         on_delete=models.PROTECT,
+        related_name='ip_addresses',
         verbose_name=_("IP subnet"),
     )
     address = models.GenericIPAddressField(
