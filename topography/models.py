@@ -11,8 +11,8 @@ class BuildingGroup(models.Model):
 class Building(models.Model):
     group = models.ForeignKey(BuildingGroup, null=True, blank=True, on_delete=models.SET_NULL, related_name='buildings')
     number = models.SlugField()
-    name = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
+    name = models.CharField(max_length=256)
+    address = models.CharField(max_length=256)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
 
@@ -24,7 +24,7 @@ class Building(models.Model):
 
 class Room(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='rooms')
-    number = models.CharField(max_length=31)
+    number = models.SlugField()
     occupant = models.ForeignKey('auth.User', null=True, blank=True, on_delete=models.SET_NULL, related_name='room')
 
     def __str__(self):
